@@ -6,8 +6,16 @@ module.exports = {
      */
     run: (client) => {
         console.log(`Logged in as ${client.user.tag}!`);
-        client.guilds.cache.forEach(guild => {
-            guild.commands.set(commands);
+        const commandsArray=[];
+        client.slashCommands.forEach(cmd => {
+            if (cmd.permission) {
+                if (cmd.permission.member) {
+                    cmd.defaultMemberPermissions=cmd.permission.member;
+                }
+            }
+            commandsArray.push(cmd);
         });
+        client.application.commands.set(commandsArray);
+        client.user.setPresence(client.config.presence);
     }
 }
