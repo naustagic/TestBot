@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits } = require("discord.js");
+const { Client, GatewayIntentBits, Collection } = require("discord.js");
 const db = require("../../database/db");
 require("dotenv").config()
 class DiscordClient extends Client {
@@ -31,6 +31,8 @@ class DiscordClient extends Client {
         };
 
         this.db = db;
+
+        this.slashCommands = new Collection();
     };
 
     async start() {
